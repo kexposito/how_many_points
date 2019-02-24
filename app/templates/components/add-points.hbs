@@ -1,0 +1,36 @@
+{{#paper-dialog
+  onClose=(action "closeDialog" "cancel")
+  origin=dialogOrigin
+  class="modal-size"
+  clickOutsideToClose=true
+}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      {{#paper-button
+        iconButton=true
+        onClick=(action "closeDialog" "cancel")
+      }}
+        {{paper-icon icon="close"}}
+      {{/paper-button}}
+      <h2>Add Points</h2>
+      <span class="flex"></span>
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-dialog-content}}
+      {{paper-input
+        class="flex"
+        label="User points"
+        value=newpoints
+        type="number"
+        onChange=(action (mut newpoints))
+      }}
+  {{/paper-dialog-content}}
+  {{#paper-dialog-actions}}
+    {{#paper-button
+      class="flex"
+      onClick=(action "addPoints" newpoints)
+    }}
+      Add Points to: {{user.username}}
+    {{/paper-button}}
+  {{/paper-dialog-actions}}
+{{/paper-dialog}}

@@ -1,3 +1,6 @@
+# check-it
+
+You can check the page here: track-my-score.surge.sh
 # points-counter
 
 This README outlines the details of collaborating on this Ember application.

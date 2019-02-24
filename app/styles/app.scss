@@ -1,1 +1,28 @@
 @import 'ember-paper';
+
+.table-title {
+    text-align: center
+  }
+
+.md-char-counter {
+display: none;
+}
+
+md-input-container.md-input-focused .md-char-counter,
+md-input-container.md-input-invalid .md-char-counter {
+display: block;
+}
+
+.md-errors-spacer {
+display: none;
+}
+
+.create-user-container {
+    position: fixed;
+    right: 30px;
+    bottom: 20px;
+}
+
+.alert-p {
+    font-size: 18px;
+  }

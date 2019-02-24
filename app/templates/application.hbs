@@ -1,5 +1,102 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+{{#paper-sidenav-container class="inner-sidenav"}}
 
-{{outlet}}
+  {{#paper-sidenav
+    class="md-whiteframe-z2"
+    name="left2"
+    open=leftSideBarOpen
+    lockedOpen=leftSideBarLockedOpen
+    isLockedOpen=leftSideBarLockedOpen
+    onToggle=(action (mut leftSideBarOpen))
+  }}
+    {{#paper-toolbar as |toolbar|}}
+      {{#paper-toolbar-tools}}Users{{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+    {{#each model as |user|}}
+      {{#paper-item}}
+        <p>{{user.username}}</p>
+      {{/paper-item}}
+      {{paper-divider}}
+    {{/each}}
+  {{/paper-sidenav}}
+  {{#paper-card-content class="flex"}}
+    <div class="layout-fill layout-align-center-center" style="height: 500px">
+      <p class="table-title">
+        Enjoy the game
+      </p>
+      <div class="layout flex layout-gt-sm flex-gt-sm layout-align-center">
+      <div class="flex-40 layout-align-center-center">
+        {{#paper-card}}
+          {{#paper-list}}
+            {{#each model as |user|}}
+              {{#paper-item
+                onClick=(action "showAddPointsDialog" user)
+                class="md-2-line"
+              }}
+                <div class="md-list-item-text flex-50">
+                  <h5>{{user.username}}</h5>
+                </div>
+                {{paper-divider}}
+                <p>{{user.points}}</p>
+              {{/paper-item}}
+            {{else}}
+              <div
+                role="button"
+                class="layout-row layout-align-center-center"
+                {{action "showAddUserDialog"}}
+              >
+                <a>You haven't created any user to play yet. Click here to add one!</a>
+              </div>
+            {{/each}}
+          {{/paper-list}}
+        {{/paper-card}}
+      </div>
+      </div>
+    </div>
+    {{#paper-button class="create-user-container" fab=true raised=true accent=true onClick=(action "showAddUserDialog")}}
+      {{paper-icon "person_add"}}
+    {{/paper-button}}
+  {{/paper-card-content}}
+{{/paper-sidenav-container}}
+{{#if addUserDialog}}
+  {{add-user
+    close=(action "closeModal")
+  }}
+{{/if}}
+{{#if addPointsDialog}}
+  {{add-points
+    user=selectedUser
+    close=(action "closeModal")
+  }}
+{{/if}}
+{{#if welcomeDialog}}
+  {{#paper-dialog fullscreen=fullscreen onClose=(action "closeAlertDialog") }}
+    {{#paper-dialog-content}}
+      <h2
+        class="md-title"
+      >
+        Welcome to 'TrackMyScore'!
+      </h2>
+      <p
+        class="alert-p"
+      >
+        This is a page were you can keep track of your score in games.
+        Add playes, and then just click them to add the score they get it when the round finish.
+      </p>
+      <p
+        class="alert-p"
+      >
+        Hope you enjoy the game and dont cheat!. If you want to start a new Game just refresh the page.
+      </p>
+    {{/paper-dialog-content}}
+    {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{#paper-button
+        primary=true
+        onClick=(action "closeAlertDialog")
+      }}
+        Got It!
+      {{/paper-button}}
+    {{/paper-dialog-actions}}
+  {{/paper-dialog}}
+{{/if}}
+{{paper-toaster}}
